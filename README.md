@@ -28,8 +28,8 @@ Before running the project, make sure you have the following installed:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/login-mongodb-app.git
-    cd login-mongodb-app
+    git clone https://github.com/Rerey155-del/Data-Product-app
+    cd Data-Product-app
     ```
 
 2. **Install the dependencies:**
