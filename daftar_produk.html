@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Produk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .product-card h3 {
+      margin: 0;
+      color: #007BFF;
+    }
+    .product-card p {
+      margin: 8px 0;
+    }
+    .price {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .category {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Daftar Produk</h1>
+  <div class="product-container" id="product-container">
+    <!-- Produk akan ditampilkan di sini -->
+  </div>
+
+  <script>
+    async function fetchProducts() {
+      try {
+        // Fetch data produk dari backend
+        const response = await fetch('http://localhost:3000/products');
+        const products = await response.json();
+
+        // Ambil elemen container
+        const container = document.getElementById('product-container');
+
+        // Loop melalui data produk dan menampilkannya di HTML
+        products.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.classList.add('product-card');
+
+          productCard.innerHTML = `
+            <h3>${product.name}</h3>
+            <p class="category">${product.category}</p>
+            <p class="price">Rp ${product.price}</p>
+            <p>${product.description}</p>
+            <p>Stok: ${product.stockQuantity} ${product.inStock ? '(Tersedia)' : '(Habis)'}</p>
+          `;
+
+          container.appendChild(productCard);
+        });
+      } catch (error) {
+        console.error("Gagal mengambil data produk:", error);
+      }
+    }
+
+    // Panggil fungsi fetchProducts setelah halaman dimuat
+    window.onload = fetchProducts;
+  </script>
+
+</body>
+</html>

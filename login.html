@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="text"], input[type="number"] {
+      width: 95%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="text" id="nama" placeholder="Nama" required>
+      <input type="number" id="umur" placeholder="Umur" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const nama = document.getElementById('nama').value;
+      const umur = document.getElementById('umur').value;
+
+      try {
+        // Fetch semua data user dari API
+        const response = await fetch('http://localhost:3000/user', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          
+          // Cari pengguna yang cocok dengan nama dan umur
+          const user = data.find(user => user.nama === nama && user.umur == umur);
+
+          if (user) {
+            // Jika ditemukan, tampilkan SweetAlert dan redirect
+            Swal.fire({
+              title: 'Login Berhasil!',
+              text: 'Anda akan dialihkan ke halaman daftar produk.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'daftar_produk.html';
+              }
+            });
+          } else {
+            // Jika tidak ditemukan, tampilkan pesan error dengan SweetAlert
+            Swal.fire({
+              title: 'Gagal Login',
+              text: 'Nama atau umur salah. Coba lagi.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        } else {
+          Swal.fire({
+            title: 'Gagal',
+            text: 'Gagal mendapatkan data dari server.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Koneksi Gagal',
+          text: 'Gagal terhubung ke server.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

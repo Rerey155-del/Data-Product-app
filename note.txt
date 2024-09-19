@@ -1,0 +1,25 @@
+app.js
+Ada beberapa hal yang bisa menyebabkan kode tersebut tidak berjalan, berikut beberapa kemungkinan masalah dan solusinya:
+
+Deprecation Warning (useCreateIndex):
+
+Pada Mongoose versi terbaru, opsi useCreateIndex sudah tidak didukung lagi dan akan memunculkan deprecation warning. Kamu bisa menghapus useCreateIndex: true dari opsi koneksi.
+Asynchronous Nature of Mongoose:
+
+Koneksi ke MongoDB bersifat asynchronous, jadi perlu memastikan bahwa proses penyimpanan data (contact1.save()) dieksekusi setelah koneksi berhasil. Meskipun Mongoose akan mencoba menyambungkan jika koneksi belum siap, lebih baik menunggu koneksi siap dengan menggunakan event mongoose.connection.once() atau memastikan dalam async/await pattern.
+Koneksi Gagal:
+
+Pastikan MongoDB server sedang berjalan. Kamu bisa mengeceknya dengan menjalankan perintah berikut di terminal:
+bash
+Salin kode
+sudo service mongod start
+
+app2.js
+Dalam kode yang kamu tulis, terdapat sedikit kekeliruan dalam penggunaan barangSaya dan Product. Yang seharusnya digunakan untuk melakukan query ke database adalah model Mongoose, bukan schema. Berikut penjelasannya:
+
+barangSaya adalah schema yang mendefinisikan struktur dokumen.
+Product adalah model yang digunakan untuk berinteraksi dengan koleksi MongoDB.
+Jadi, ketika kamu ingin melakukan query atau operasi database lainnya (seperti find()), kamu harus menggunakan model Product, bukan schema barangSaya.
+
+Kesalahan dan Solusinya:
+Pada endpoint /, kamu menggunakan barangSaya.find() padahal yang seharusnya digunakan adalah Product.find(). Schema hanya mendefinisikan struktur data, sementara model digunakan untuk berinteraksi dengan database.
