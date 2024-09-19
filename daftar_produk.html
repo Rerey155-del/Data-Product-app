@@ -75,17 +75,16 @@
             }</p>
           `;
 
-            container.appendChild(productCard);
-          });
-        } catch (error) {
-          console.error("Gagal mengambil data produk:", error);
-        }
+          container.appendChild(productCard);
+        });
+      } catch (error) {
+        console.error("Gagal mengambil data produk:", error);
       }
+    }
 
+    // Panggil fungsi fetchProducts setelah halaman dimuat
+    window.onload = fetchProducts;
+  </script>
 
-
-      // Panggilan fungsi fetchProducts setelah halaman dimuat
-      window.onload = fetchProducts;
-    </script>
-  </body>
+</body>
 </html>
