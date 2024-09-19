@@ -72,9 +72,11 @@ Before running the project, make sure you have the following installed:
 
 ### Example POST Request:
 masukkan URL dari '/user' yang methode POST ke bagian body dari aplikasi postman, dan inputkan datanya seperti ini :
+
 {
   "nama": "John Doe",
   "umur": 25
 }
+
 lalu kirim kan dan mendapatkan hasil jika telah diinput
 
