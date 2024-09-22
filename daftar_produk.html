@@ -15,6 +15,22 @@
         text-align: center;
         color: #333;
       }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        color : white
+      }
+      button.logout {
+        background-color: red;
+        color : white;
+        border : none;
+        padding: 10px 20px;
+        cursor : pointer;
+        border-radius: 5px;
+        font-size: 16px;
+      }
       .product-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -45,12 +61,21 @@
     </style>
   </head>
   <body>
-    <h1>Daftar Produk</h1>
+    <div class="navbar">
+      <h1>Daftar Produk</h1>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
     <div class="product-container" id="product-container">
       <!-- Produk akan ditampilkan di sini -->
     </div>
 
     <script>
+
+      // Fungsi Logout
+      function logout() {
+        localStorage.removeItem('authToken')
+        window.location.href = 'login.html'
+      }
       async function fetchProducts() {
         try {
           // Fetch data produk dari backend
@@ -75,16 +100,15 @@
             }</p>
           `;
 
-          container.appendChild(productCard);
-        });
-      } catch (error) {
-        console.error("Gagal mengambil data produk:", error);
+            container.appendChild(productCard);
+          });
+        } catch (error) {
+          console.error("Gagal mengambil data produk:", error);
+        }
       }
-    }
 
-    // Panggil fungsi fetchProducts setelah halaman dimuat
-    window.onload = fetchProducts;
-  </script>
-
-</body>
+      // Panggil fungsi fetchProducts setelah halaman dimuat
+      window.onload = fetchProducts;
+    </script>
+  </body>
 </html>
