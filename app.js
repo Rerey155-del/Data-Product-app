@@ -7,10 +7,12 @@ const port = 3000;
 app.use(cors());
 app.use(express.json()); // Middleware untuk parsing body JSON
 
-const url = "mongodb://localhost:27017/database";
+const url = "mongodb+srv://Reyhanvars12345:Reyhanvars12345@cluster0.mtmjd.mongodb.net/";
+// mongodb://localhost:27017/database
 // Koneksi ke MongoDB menggunakan Mongoose
 mongoose
-  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  // .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })   => Jika menggunakan mongodb
+  .connect(url, { dbName: 'namadatabase' } )   // => Jika menggunakan mongodb atlas
   .then(() => console.log("Koneksi ke MongoDB berhasil"))
   .catch((error) => console.log("Koneksi MongoDB gagal", error));
 
